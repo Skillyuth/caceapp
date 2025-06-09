@@ -2,237 +2,80 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mobile Cake Shop</title>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      background: #fdf3f3;
-    }
-    header {
-      background: #e91e63;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.6rem;
-    }
-    .container {
-      padding: 1rem;
-    }
-    .cake-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-    }
-    .cake-images {
-      display: flex;
-      overflow-x: auto;
-      margin-bottom: 0.8rem;
-    }
-    .cake-images img {
-      height: 100px;
-      margin-right: 0.6rem;
-      border-radius: 8px;
-      object-fit: cover;
-      width: 130px;
-      flex-shrink: 0;
-    }
-    select,
-    input,
-    textarea,
-    button {
-      width: 100%;
-      padding: 0.6rem;
-      margin: 0.4rem 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
-    button {
-      background: #e91e63;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #c2185b;
-    }
-    .cart-summary {
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      margin: 1.5rem 0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-    .total {
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #333;
-      text-align: right;
-    }
-    .reset-btn {
-      background: #555;
-      margin-top: 1rem;
-    }
-    /* Responsive */
-    @media (min-width: 600px) {
-      .cake-card {
-        display: flex;
-        align-items: center;
-      }
-      .cake-images {
-        flex-direction: column;
-        margin-right: 1rem;
-      }
-      .cake-images img {
-        margin-bottom: 0.6rem;
-        width: 120px;
-        height: 90px;
-      }
-    }
+    body { font-family: sans-serif; margin: 0; background: #fff7f7; }
+    header { background: #e91e63; color: #fff; padding: 1rem; text-align: center; font-size: 1.6rem; }
+    .container { padding: 1rem; }
+    .cake-card { background: #fff; border-radius: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); margin-bottom: 1.5rem; padding: 1rem; }
+    .cake-images { display: flex; overflow-x: auto; margin-bottom: 0.8rem; }
+    .cake-images img { height: 100px; margin-right: 0.6rem; border-radius: 8px; }
+    select, input, textarea, button { width: 100%; padding: 0.6rem; margin: 0.4rem 0; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
+    button { background: #e91e63; color: white; border: none; font-weight: bold; cursor: pointer; }
+    .cart-summary { background: white; padding: 1rem; border-radius: 10px; margin: 1.5rem 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .total { font-weight: bold; font-size: 1.2rem; color: #333; text-align: right; }
+    .reset-btn { background: #555; margin-top: 1rem; }
   </style>
 </head>
 <body>
   <header>🎂 Mobile Cake Shop</header>
   <div class="container">
+    <script>
+      const cakes = [
+        { name: "Chocolate Truffle Cake", desc: "Rich chocolate layers with creamy frosting.", imgs: ["https://source.unsplash.com/600x400/?chocolate-cake", "https://source.unsplash.com/600x400/?truffle-cake", "https://source.unsplash.com/600x400/?cake"] },
+        { name: "Red Velvet Cake", desc: "Classic red velvet with soft cream cheese.", imgs: ["https://source.unsplash.com/600x400/?red-velvet-cake", "https://source.unsplash.com/600x400/?cake-red", "https://source.unsplash.com/600x400/?dessert"] },
+        { name: "Black Forest Cake", desc: "Chocolate sponge with cherries and cream.", imgs: ["https://source.unsplash.com/600x400/?black-forest-cake", "https://source.unsplash.com/600x400/?forest-cake", "https://source.unsplash.com/600x400/?whipped-cream-cake"] },
+        { name: "Butterscotch Cake", desc: "Soft sponge with caramel and butterscotch chips.", imgs: ["https://source.unsplash.com/600x400/?butterscotch-cake", "https://source.unsplash.com/600x400/?caramel-cake", "https://source.unsplash.com/600x400/?cake-butter"] },
+        { name: "Pineapple Cake", desc: "Juicy pineapple cream layered delight.", imgs: ["https://source.unsplash.com/600x400/?pineapple-cake", "https://source.unsplash.com/600x400/?fruit-cake", "https://source.unsplash.com/600x400/?yellow-cake"] },
+        { name: "Mango Cake", desc: "Seasonal mango freshness in every bite.", imgs: ["https://source.unsplash.com/600x400/?mango-cake", "https://source.unsplash.com/600x400/?fresh-cake", "https://source.unsplash.com/600x400/?mango-dessert"] },
+        { name: "Strawberry Cake", desc: "Sweet and creamy strawberry indulgence.", imgs: ["https://source.unsplash.com/600x400/?strawberry-cake", "https://source.unsplash.com/600x400/?pink-cake", "https://source.unsplash.com/600x400/?cake-love"] },
+        { name: "Coffee Cake", desc: "For the love of coffee and cocoa.", imgs: ["https://source.unsplash.com/600x400/?coffee-cake", "https://source.unsplash.com/600x400/?mocha-cake", "https://source.unsplash.com/600x400/?cake-brown"] },
+      ];
+    </script>
+
     <div id="cake-list"></div>
+
     <div class="cart-summary">
       <h4>🛒 Your Cart</h4>
       <ul id="cart"></ul>
       <p class="total">Total: ₹<span id="total">0</span></p>
       <button type="button" class="reset-btn" onclick="resetCart()">Reset Cart</button>
     </div>
-    <form
-      id="orderForm"
-      action="https://formsubmit.co/a995de801cdfc7487326f5756468f8ef"
-      method="POST"
-      onsubmit="return handleSubmit(event)"
-    >
-      <input type="hidden" name="Order ID" id="orderId" />
+
+    <form action="https://formsubmit.co/a995de801cdfc7487326f5756468f8ef" method="POST">
       <input type="hidden" name="Cart Items" id="cart-items-hidden" />
       <input type="hidden" name="Total Amount" id="total-hidden" />
-
+      <input type="hidden" name="Order ID" id="order-id" />
+      <input type="hidden" name="Order Date" id="order-date" />
+      <input type="hidden" name="_redirect" value="https://yourdomain.com/thankyou.html" />
+      
       <input type="text" name="Name" placeholder="Your Name" required />
       <input type="tel" name="Phone" placeholder="Phone Number" required />
-
-      <select name="Delivery Address" id="deliveryAddress" onchange="toggleCustomAddress()">
+      <select name="Delivery Address">
         <option value="Deepanshu Restaurant">Deepanshu Restaurant</option>
-        <option value="Custom">Enter custom address below</option>
+        <option value="Custom">Custom Address</option>
       </select>
-
-      <textarea
-        name="Custom Address"
-        id="customAddress"
-        placeholder="Write custom address if selected above"
-        style="display:none;"
-      ></textarea>
-
+      <textarea name="Custom Address" placeholder="Write custom address if selected above"></textarea>
       <textarea name="Message on Cake" placeholder="Message on the cake (optional)"></textarea>
-
-      <!-- Redirect after submission -->
-      <input type="hidden" name="_next" value="thankyou.html" />
-
       <button type="submit">Place Order</button>
     </form>
   </div>
 
   <script>
-    const cakes = [
-      {
-        name: "Chocolate Truffle Cake",
-        desc: "Rich chocolate layers with creamy frosting.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?chocolate-cake",
-          "https://source.unsplash.com/600x400/?truffle-cake",
-          "https://source.unsplash.com/600x400/?cake",
-        ],
-      },
-      {
-        name: "Red Velvet Cake",
-        desc: "Classic red velvet with soft cream cheese.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?red-velvet-cake",
-          "https://source.unsplash.com/600x400/?cake-red",
-          "https://source.unsplash.com/600x400/?dessert",
-        ],
-      },
-      {
-        name: "Black Forest Cake",
-        desc: "Chocolate sponge with cherries and cream.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?black-forest-cake",
-          "https://source.unsplash.com/600x400/?forest-cake",
-          "https://source.unsplash.com/600x400/?whipped-cream-cake",
-        ],
-      },
-      {
-        name: "Butterscotch Cake",
-        desc: "Soft sponge with caramel and butterscotch chips.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?butterscotch-cake",
-          "https://source.unsplash.com/600x400/?caramel-cake",
-          "https://source.unsplash.com/600x400/?cake-butter",
-        ],
-      },
-      {
-        name: "Pineapple Cake",
-        desc: "Juicy pineapple cream layered delight.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?pineapple-cake",
-          "https://source.unsplash.com/600x400/?fruit-cake",
-          "https://source.unsplash.com/600x400/?yellow-cake",
-        ],
-      },
-      {
-        name: "Mango Cake",
-        desc: "Seasonal mango freshness in every bite.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?mango-cake",
-          "https://source.unsplash.com/600x400/?fresh-cake",
-          "https://source.unsplash.com/600x400/?mango-dessert",
-        ],
-      },
-      {
-        name: "Strawberry Cake",
-        desc: "Sweet and creamy strawberry indulgence.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?strawberry-cake",
-          "https://source.unsplash.com/600x400/?pink-cake",
-          "https://source.unsplash.com/600x400/?cake-love",
-        ],
-      },
-      {
-        name: "Coffee Cake",
-        desc: "For the love of coffee and cocoa.",
-        imgs: [
-          "https://source.unsplash.com/600x400/?coffee-cake",
-          "https://source.unsplash.com/600x400/?mocha-cake",
-          "https://source.unsplash.com/600x400/?cake-brown",
-        ],
-      },
-    ];
-
     let cart = [];
 
     function renderCakes() {
-      const list = document.getElementById("cake-list");
-      list.innerHTML = "";
+      const list = document.getElementById('cake-list');
+      list.innerHTML = '';
       cakes.forEach((cake, i) => {
-        const card = document.createElement("div");
-        card.className = "cake-card";
-
+        const card = document.createElement('div');
+        card.className = 'cake-card';
         let imagesHTML = '<div class="cake-images">';
-        cake.imgs.forEach((img) => {
+        cake.imgs.forEach(img => {
           imagesHTML += `<img src="${img}" alt="Cake Image" />`;
         });
-        imagesHTML += "</div>";
-
+        imagesHTML += '</div>';
         card.innerHTML = `
           ${imagesHTML}
           <h3>${cake.name}</h3>
@@ -251,8 +94,7 @@
     }
 
     function updatePrice(value, id) {
-      // Not used but kept for future use if needed
-      const price = value.split("-")[1];
+      const price = value.split('-')[1];
       document.getElementById(id).dataset.price = price;
     }
 
@@ -260,30 +102,28 @@
       const select = document.getElementById(selectId);
       const selected = select.options[select.selectedIndex].text;
       const value = select.value;
-      if (!value) return alert("Please select a variant.");
-      const price = parseInt(value.split("-")[1]);
-
-      cart.push({ item: cake + " - " + selected, price });
+      if (!value) return alert('Please select a variant.');
+      const price = parseInt(value.split('-')[1]);
+      cart.push({ item: cake + ' - ' + selected, price });
       renderCart();
     }
 
     function renderCart() {
-      const cartEl = document.getElementById("cart");
-      const totalEl = document.getElementById("total");
-      const hiddenItems = document.getElementById("cart-items-hidden");
-      const hiddenTotal = document.getElementById("total-hidden");
-
-      cartEl.innerHTML = "";
+      const cartEl = document.getElementById('cart');
+      const totalEl = document.getElementById('total');
+      const hiddenItems = document.getElementById('cart-items-hidden');
+      const hiddenTotal = document.getElementById('total-hidden');
+      cartEl.innerHTML = '';
       let total = 0;
-      cart.forEach((c) => {
-        const li = document.createElement("li");
+      cart.forEach(c => {
+        const li = document.createElement('li');
         li.textContent = `${c.item} - ₹${c.price}`;
         cartEl.appendChild(li);
         total += c.price;
       });
       totalEl.textContent = total;
       hiddenTotal.value = total;
-      hiddenItems.value = cart.map((c) => c.item + " - ₹" + c.price).join(", ");
+      hiddenItems.value = cart.map(c => c.item + ' - ₹' + c.price).join(', ');
     }
 
     function resetCart() {
@@ -291,45 +131,18 @@
       renderCart();
     }
 
-    function toggleCustomAddress() {
-      const deliverySelect = document.getElementById("deliveryAddress");
-      const customAddress = document.getElementById("customAddress");
-      if (deliverySelect.value === "Custom") {
-        customAddress.style.display = "block";
-        customAddress.required = true;
-      } else {
-        customAddress.style.display = "none";
-        customAddress.required = false;
-      }
-    }
-
-    function handleSubmit(event) {
-      if (cart.length === 0) {
-        alert("Your cart is empty! Please add at least one cake to place an order.");
-        event.preventDefault();
-        return false;
-      }
-
-      // Generate Order ID (YYYYMMDD + 10-digit random)
-      const orderIdInput = document.getElementById("orderId");
+    function generateOrderData() {
+      const orderId = Math.floor(1000000000 + Math.random() * 9000000000);
       const now = new Date();
-
-      const yyyy = now.getFullYear();
-      const mm = String(now.getMonth() + 1).padStart(2, "0");
-      const dd = String(now.getDate()).padStart(2, "0");
-      const dateStr = `${yyyy}${mm}${dd}`;
-
-      const randomDigits = Math.floor(Math.random() * 1e10)
-        .toString()
-        .padStart(10, "0");
-
-      const orderId = dateStr + randomDigits;
-      orderIdInput.value = orderId;
-
-      return true;
+      const dateTime = now.toLocaleString();
+      document.getElementById('order-id').value = orderId;
+      document.getElementById('order-date').value = dateTime;
     }
 
-    window.onload = renderCakes;
+    window.onload = () => {
+      renderCakes();
+      generateOrderData();
+    };
   </script>
 </body>
 </html>
