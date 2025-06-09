@@ -19,8 +19,6 @@
     }
     .container {
       padding: 1rem;
-      max-width: 480px;
-      margin: auto;
     }
     .cake-card {
       background: #fff;
@@ -33,14 +31,14 @@
       display: flex;
       overflow-x: auto;
       margin-bottom: 0.8rem;
-      gap: 0.5rem;
     }
     .cake-images img {
       height: 100px;
+      margin-right: 0.6rem;
       border-radius: 8px;
-      flex-shrink: 0;
-      width: 120px;
       object-fit: cover;
+      width: 130px;
+      flex-shrink: 0;
     }
     select,
     input,
@@ -63,7 +61,7 @@
       transition: background 0.3s ease;
     }
     button:hover {
-      background: #c7155a;
+      background: #c2185b;
     }
     .cart-summary {
       background: white;
@@ -82,16 +80,21 @@
       background: #555;
       margin-top: 1rem;
     }
-    /* Confirmation message styling */
-    #confirmationMsg {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 8px;
-      display: none;
-      text-align: center;
+    /* Responsive */
+    @media (min-width: 600px) {
+      .cake-card {
+        display: flex;
+        align-items: center;
+      }
+      .cake-images {
+        flex-direction: column;
+        margin-right: 1rem;
+      }
+      .cake-images img {
+        margin-bottom: 0.6rem;
+        width: 120px;
+        height: 90px;
+      }
     }
   </style>
 </head>
@@ -99,42 +102,44 @@
   <header>🎂 Mobile Cake Shop</header>
   <div class="container">
     <div id="cake-list"></div>
-
     <div class="cart-summary">
       <h4>🛒 Your Cart</h4>
       <ul id="cart"></ul>
       <p class="total">Total: ₹<span id="total">0</span></p>
       <button type="button" class="reset-btn" onclick="resetCart()">Reset Cart</button>
     </div>
-
     <form
       id="orderForm"
       action="https://formsubmit.co/a995de801cdfc7487326f5756468f8ef"
       method="POST"
       onsubmit="return handleSubmit(event)"
     >
+      <input type="hidden" name="Order ID" id="orderId" />
       <input type="hidden" name="Cart Items" id="cart-items-hidden" />
       <input type="hidden" name="Total Amount" id="total-hidden" />
+
       <input type="text" name="Name" placeholder="Your Name" required />
       <input type="tel" name="Phone" placeholder="Phone Number" required />
-      <select name="Delivery Address" id="deliverySelect" required onchange="toggleCustomAddress()">
+
+      <select name="Delivery Address" id="deliveryAddress" onchange="toggleCustomAddress()">
         <option value="Deepanshu Restaurant">Deepanshu Restaurant</option>
         <option value="Custom">Enter custom address below</option>
       </select>
+
       <textarea
         name="Custom Address"
         id="customAddress"
         placeholder="Write custom address if selected above"
         style="display:none;"
       ></textarea>
+
       <textarea name="Message on Cake" placeholder="Message on the cake (optional)"></textarea>
-      <!-- Honeypot field to prevent spam -->
-      <input type="text" name="_honey" style="display:none" />
-      <input type="hidden" name="_captcha" value="false" />
+
+      <!-- Redirect after submission -->
+      <input type="hidden" name="_next" value="thankyou.html" />
+
       <button type="submit">Place Order</button>
     </form>
-
-    <div id="confirmationMsg">✅ Order Confirmed! Thank you for your order. We'll contact you soon via WhatsApp or phone.</div>
   </div>
 
   <script>
@@ -145,7 +150,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?chocolate-cake",
           "https://source.unsplash.com/600x400/?truffle-cake",
-          "https://source.unsplash.com/600x400/?cake"
+          "https://source.unsplash.com/600x400/?cake",
         ],
       },
       {
@@ -154,7 +159,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?red-velvet-cake",
           "https://source.unsplash.com/600x400/?cake-red",
-          "https://source.unsplash.com/600x400/?dessert"
+          "https://source.unsplash.com/600x400/?dessert",
         ],
       },
       {
@@ -163,7 +168,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?black-forest-cake",
           "https://source.unsplash.com/600x400/?forest-cake",
-          "https://source.unsplash.com/600x400/?whipped-cream-cake"
+          "https://source.unsplash.com/600x400/?whipped-cream-cake",
         ],
       },
       {
@@ -172,7 +177,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?butterscotch-cake",
           "https://source.unsplash.com/600x400/?caramel-cake",
-          "https://source.unsplash.com/600x400/?cake-butter"
+          "https://source.unsplash.com/600x400/?cake-butter",
         ],
       },
       {
@@ -181,7 +186,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?pineapple-cake",
           "https://source.unsplash.com/600x400/?fruit-cake",
-          "https://source.unsplash.com/600x400/?yellow-cake"
+          "https://source.unsplash.com/600x400/?yellow-cake",
         ],
       },
       {
@@ -190,7 +195,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?mango-cake",
           "https://source.unsplash.com/600x400/?fresh-cake",
-          "https://source.unsplash.com/600x400/?mango-dessert"
+          "https://source.unsplash.com/600x400/?mango-dessert",
         ],
       },
       {
@@ -199,7 +204,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?strawberry-cake",
           "https://source.unsplash.com/600x400/?pink-cake",
-          "https://source.unsplash.com/600x400/?cake-love"
+          "https://source.unsplash.com/600x400/?cake-love",
         ],
       },
       {
@@ -208,7 +213,7 @@
         imgs: [
           "https://source.unsplash.com/600x400/?coffee-cake",
           "https://source.unsplash.com/600x400/?mocha-cake",
-          "https://source.unsplash.com/600x400/?cake-brown"
+          "https://source.unsplash.com/600x400/?cake-brown",
         ],
       },
     ];
@@ -224,7 +229,7 @@
 
         let imagesHTML = '<div class="cake-images">';
         cake.imgs.forEach((img) => {
-          imagesHTML += `<img src="${img}" alt="Cake image" loading="lazy" />`;
+          imagesHTML += `<img src="${img}" alt="Cake Image" />`;
         });
         imagesHTML += "</div>";
 
@@ -239,28 +244,26 @@
             <option value="3lb-999">3 Pound - ₹999</option>
             <option value="4lb-1299">4 Pound - ₹1299</option>
           </select>
-          <button type="button" onclick="addToCart('${cake.name}', 'variant-${i}')">Add to Cart</button>
+          <button onclick="addToCart('${cake.name}', 'variant-${i}')">Add to Cart</button>
         `;
-
         list.appendChild(card);
       });
     }
 
     function updatePrice(value, id) {
-      const select = document.getElementById(id);
-      select.dataset.price = value ? value.split("-")[1] : "0";
+      // Not used but kept for future use if needed
+      const price = value.split("-")[1];
+      document.getElementById(id).dataset.price = price;
     }
 
     function addToCart(cake, selectId) {
       const select = document.getElementById(selectId);
+      const selected = select.options[select.selectedIndex].text;
       const value = select.value;
-      if (!value) {
-        alert("Please select a variant.");
-        return;
-      }
+      if (!value) return alert("Please select a variant.");
       const price = parseInt(value.split("-")[1]);
-      const variantText = select.options[select.selectedIndex].text;
-      cart.push({ item: `${cake} - ${variantText}`, price });
+
+      cart.push({ item: cake + " - " + selected, price });
       renderCart();
     }
 
@@ -272,13 +275,12 @@
 
       cartEl.innerHTML = "";
       let total = 0;
-      cart.forEach((c, i) => {
+      cart.forEach((c) => {
         const li = document.createElement("li");
         li.textContent = `${c.item} - ₹${c.price}`;
         cartEl.appendChild(li);
         total += c.price;
       });
-
       totalEl.textContent = total;
       hiddenTotal.value = total;
       hiddenItems.value = cart.map((c) => c.item + " - ₹" + c.price).join(", ");
@@ -289,9 +291,8 @@
       renderCart();
     }
 
-    // Show or hide custom address textarea based on dropdown
     function toggleCustomAddress() {
-      const deliverySelect = document.getElementById("deliverySelect");
+      const deliverySelect = document.getElementById("deliveryAddress");
       const customAddress = document.getElementById("customAddress");
       if (deliverySelect.value === "Custom") {
         customAddress.style.display = "block";
@@ -299,26 +300,36 @@
       } else {
         customAddress.style.display = "none";
         customAddress.required = false;
-        customAddress.value = "";
       }
     }
 
-    // Handle form submission, prevent submit if cart empty, show confirmation message
     function handleSubmit(event) {
       if (cart.length === 0) {
         alert("Your cart is empty! Please add at least one cake to place an order.");
         event.preventDefault();
         return false;
       }
-      // Confirmation message show after successful submission - formsubmit redirects, so show message after submit won't work here
-      // But to keep UX smooth, just allow submit here.
+
+      // Generate Order ID (YYYYMMDD + 10-digit random)
+      const orderIdInput = document.getElementById("orderId");
+      const now = new Date();
+
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const dd = String(now.getDate()).padStart(2, "0");
+      const dateStr = `${yyyy}${mm}${dd}`;
+
+      const randomDigits = Math.floor(Math.random() * 1e10)
+        .toString()
+        .padStart(10, "0");
+
+      const orderId = dateStr + randomDigits;
+      orderIdInput.value = orderId;
+
       return true;
     }
 
-    window.onload = () => {
-      renderCakes();
-      renderCart();
-    };
+    window.onload = renderCakes;
   </script>
 </body>
 </html>
