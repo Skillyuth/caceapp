@@ -43,7 +43,7 @@
       <button type="button" class="reset-btn" onclick="resetCart()">Reset Cart</button>
     </div>
 
-    <form action="https://formsubmit.co/a995de801cdfc7487326f5756468f8ef" method="POST">
+    <form action="https://formsubmit.co/a995de801cdfc7487326f5756468f8ef" method="POST" onsubmit="generateOrderData()">
       <input type="hidden" name="Cart Items" id="cart-items-hidden" />
       <input type="hidden" name="Total Amount" id="total-hidden" />
       <input type="hidden" name="Order ID" id="order-id" />
@@ -53,7 +53,7 @@
       <input type="text" name="Name" placeholder="Your Name" required />
       <input type="tel" name="Phone" placeholder="Phone Number" required />
 
-      <select name="Delivery Address" id="address-select" onchange="toggleCustomAddress()">
+      <select name="Delivery Address" id="address-select" onchange="toggleCustomAddress()" required>
         <option value="Deepanshu Restaurant">Deepanshu Restaurant</option>
         <option value="Custom">Custom Address</option>
       </select>
