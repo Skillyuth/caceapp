@@ -49,14 +49,17 @@
       <input type="hidden" name="Order ID" id="order-id" />
       <input type="hidden" name="Order Date" id="order-date" />
       <input type="hidden" name="_redirect" value="https://yourdomain.com/thankyou.html" />
-      
+
       <input type="text" name="Name" placeholder="Your Name" required />
       <input type="tel" name="Phone" placeholder="Phone Number" required />
-      <select name="Delivery Address">
+
+      <select name="Delivery Address" id="address-select" onchange="toggleCustomAddress()">
         <option value="Deepanshu Restaurant">Deepanshu Restaurant</option>
         <option value="Custom">Custom Address</option>
       </select>
-      <textarea name="Custom Address" placeholder="Write custom address if selected above"></textarea>
+
+      <textarea name="Custom Address" id="custom-address" placeholder="Write custom address if selected above" style="display:none;"></textarea>
+
       <textarea name="Message on Cake" placeholder="Message on the cake (optional)"></textarea>
       <button type="submit">Place Order</button>
     </form>
@@ -137,6 +140,12 @@
       const dateTime = now.toLocaleString();
       document.getElementById('order-id').value = orderId;
       document.getElementById('order-date').value = dateTime;
+    }
+
+    function toggleCustomAddress() {
+      const select = document.getElementById('address-select');
+      const textarea = document.getElementById('custom-address');
+      textarea.style.display = select.value === 'Custom' ? 'block' : 'none';
     }
 
     window.onload = () => {
