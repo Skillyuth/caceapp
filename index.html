@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Cake Shop</title>
+    <title>Dynamic Cake Shop</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -66,117 +68,108 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
+    <!-- Header -->
     <header class="bg-pink-500 text-white p-4 shadow-md flex items-center justify-center rounded-b-lg">
-        <span class="text-3xl mr-3">🎂</span> <h1 class="text-2xl md:text-3xl font-bold">Mobile Cake Shop</h1>
+        <span class="text-3xl mr-3">🎂</span>
+        <h1 class="text-2xl md:text-3xl font-bold">डायनामिक केक शॉप</h1> <!-- Dynamic Cake Shop in Hindi -->
     </header>
 
     <main class="flex-grow container mx-auto p-4 md:p-6 lg:p-8">
-        <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
-            <div class="flex flex-col md:flex-row items-center md:items-start">
-                <div class="flex justify-center mb-4 md:mb-0 md:mr-6 w-full md:w-1/3 lg:w-1/4">
-                    <div class="grid grid-cols-3 gap-2 w-full">
-                        <img src="https://placehold.co/100x100/FFC0CB/4B5563?text=Rich+Chocolate" alt="Chocolate Truffle Cake" class="w-full h-auto rounded-lg shadow-sm object-cover border-2 border-pink-200">
-                        <img src="https://placehold.co/100x100/FFC0CB/4B5563?text=Creamy+Frosting" alt="Creamy Frosting Cake" class="w-full h-auto rounded-lg shadow-sm object-cover border-2 border-pink-200">
-                        <img src="https://placehold.co/100x100/FFC0CB/4B5563?text=Truffle+Delight" alt="Truffle Delight Cake" class="w-full h-auto rounded-lg shadow-sm object-cover border-2 border-pink-200">
-                    </div>
-                </div>
-                <div class="w-full md:w-2/3 lg:w-3/4">
-                    <h2 class="text-2xl md:text-3xl font-bold mb-2 text-gray-800">Chocolate Truffle Cake</h2>
-                    <p class="text-gray-600 mb-4 text-sm md:text-base">Rich chocolate layers with creamy frosting.</p>
-
-                    <div class="mb-4">
-                        <label for="variant-select" class="block text-gray-700 font-medium mb-2">Select Variant</label>
-                        <select id="variant-select" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
-                            <option value="500g" data-price="750">500g - ₹750</option>
-                            <option value="1kg" data-price="1200">1kg - ₹1200</option>
-                            <option value="2kg" data-price="2200">2kg - ₹2200</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="quantity-input" class="block text-gray-700 font-medium mb-2">Quantity</label>
-                        <input type="number" id="quantity-input" value="1" min="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
-                    </div>
-
-                    <button id="add-to-cart-btn" class="w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
-                        Add to Cart
-                    </button>
-                </div>
+        <!-- Products Section - Will be dynamically loaded -->
+        <section id="products-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            <!-- Products will be injected here by JavaScript -->
+            <div id="loading-products" class="col-span-full flex flex-col items-center justify-center py-12">
+                <div class="loader mb-4"></div>
+                <p class="text-gray-700 font-medium">स्वादिष्ट केक लोड हो रहे हैं...</p> <!-- Loading cakes in Hindi -->
+            </div>
+            <div id="no-products-message" class="col-span-full hidden text-center py-12 text-gray-500">
+                <p>कोई प्रोडक्ट नहीं मिला। कृपया अपनी Google शीट में प्रोडक्ट जोड़ें।</p> <!-- No products found in Hindi -->
+                <p class="text-sm mt-2">सुनिश्चित करें कि आपकी 'Products' शीट सही ढंग से कॉन्फ़िगर और डिप्लॉय की गई है।</p> <!-- Ensure Products sheet in Hindi -->
+            </div>
+             <div id="products-error-message" class="col-span-full hidden text-center py-12 text-red-500">
+                <p>प्रोडक्ट लोड करने में त्रुटि। कृपया बाद में पुनः प्रयास करें या विवरण के लिए कंसोल जांचें।</p> <!-- Error loading products in Hindi -->
             </div>
         </section>
 
+        <!-- Cart Section -->
         <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
             <h2 class="text-xl md:text-2xl font-bold mb-4 flex items-center text-gray-800">
-                🛒 Your Cart
+                🛒 आपका कार्ट
             </h2>
             <div id="cart-items" class="mb-4 space-y-2 max-h-60 overflow-y-auto pr-2">
-                <p class="text-gray-500 text-center py-4" id="empty-cart-message">Your cart is empty.</p>
+                <!-- Cart items will be dynamically added here -->
+                <p class="text-gray-500 text-center py-4" id="empty-cart-message">आपका कार्ट खाली है।</p>
             </div>
             <div class="flex justify-between items-center text-lg md:text-xl font-semibold border-t border-gray-200 pt-4 mt-4">
-                <span class="text-gray-700">Total:</span>
+                <span class="text-gray-700">कुल:</span>
                 <span id="cart-total" class="text-pink-600">₹0</span>
             </div>
             <button id="reset-cart-btn" class="w-full mt-4 bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
-                Reset Cart
+                कार्ट रीसेट करें
             </button>
         </section>
 
+        <!-- Customer Details and Order Section -->
         <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
-            <h2 class="text-xl md:text-2xl font-bold mb-4 text-gray-800">Customer Information</h2>
+            <h2 class="text-xl md:text-2xl font-bold mb-4 text-gray-800">ग्राहक जानकारी</h2>
             <form id="order-form">
                 <div class="mb-4">
-                    <label for="customer-name" class="block text-gray-700 font-medium mb-2">Your Name</label>
-                    <input type="text" id="customer-name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter your name" required>
+                    <label for="customer-name" class="block text-gray-700 font-medium mb-2">आपका नाम</label>
+                    <input type="text" id="customer-name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="अपना नाम दर्ज करें" required>
                 </div>
                 <div class="mb-4">
-                    <label for="phone-number" class="block text-gray-700 font-medium mb-2">Phone Number</label>
-                    <input type="tel" id="phone-number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter your 10-digit phone number" pattern="[0-9]{10,15}" required>
+                    <label for="phone-number" class="block text-gray-700 font-medium mb-2">फ़ोन नंबर</label>
+                    <input type="tel" id="phone-number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="अपना 10 अंकों का फ़ोन नंबर दर्ज करें" pattern="[0-9]{10,15}" required>
                 </div>
                 <div class="mb-4">
-                    <label for="delivery-type" class="block text-gray-700 font-medium mb-2">Delivery Type</label>
+                    <label for="delivery-type" class="block text-gray-700 font-medium mb-2">डिलीवरी प्रकार</label>
                     <select id="delivery-type" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
-                        <option value="pickup">Pickup</option>
-                        <option value="delivery">Delivery</option>
+                        <option value="pickup">पिकअप</option>
+                        <option value="delivery">डिलीवरी</option>
                     </select>
                 </div>
                 <div class="mb-4" id="custom-address-group" style="display: none;">
-                    <label for="custom-address" class="block text-gray-700 font-medium mb-2">Custom Address</label>
-                    <textarea id="custom-address" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter full delivery address"></textarea>
+                    <label for="custom-address" class="block text-gray-700 font-medium mb-2">कस्टम पता</label>
+                    <textarea id="custom-address" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="पूरा डिलीवरी पता दर्ज करें"></textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="message-on-cake" class="block text-gray-700 font-medium mb-2">Message on the cake (optional)</label>
-                    <textarea id="message-on-cake" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="e.g., Happy Birthday!"></textarea>
+                    <label for="message-on-cake" class="block text-gray-700 font-medium mb-2">केक पर संदेश (वैकल्पिक)</label>
+                    <textarea id="message-on-cake" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="उदाहरण: Happy Birthday!"></textarea>
                 </div>
 
                 <button type="submit" id="place-order-btn" class="w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
-                    Place Order
+                    ऑर्डर दें
                 </button>
             </form>
         </section>
     </main>
 
+    <!-- Message Modal -->
     <div id="message-modal" class="modal-overlay hidden">
         <div class="modal-content">
             <h3 id="modal-title" class="text-xl font-bold mb-4 text-gray-800"></h3>
             <p id="modal-message" class="text-gray-700 mb-6"></p>
             <button id="modal-close-btn" class="bg-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
-                OK
+                ओके
             </button>
         </div>
     </div>
 
+    <!-- Loading Indicator -->
     <div id="loading-indicator" class="modal-overlay hidden">
         <div class="modal-content flex flex-col items-center">
             <div class="loader mb-4"></div>
-            <p class="text-gray-700 font-medium">Placing order...</p>
+            <p class="text-gray-700 font-medium">लोड हो रहा है...</p>
         </div>
     </div>
 
     <script>
         // DOM Elements
-        const variantSelect = document.getElementById('variant-select');
-        const quantityInput = document.getElementById('quantity-input');
-        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        const productsContainer = document.getElementById('products-container');
+        const loadingProducts = document.getElementById('loading-products');
+        const noProductsMessage = document.getElementById('no-products-message');
+        const productsErrorMessage = document.getElementById('products-error-message');
+
         const cartItemsDiv = document.getElementById('cart-items');
         const emptyCartMessage = document.getElementById('empty-cart-message');
         const cartTotalSpan = document.getElementById('cart-total');
@@ -197,119 +190,13 @@
         // Cart state
         let cart = [];
         let total = 0;
+        let availableProducts = []; // To store products fetched from Google Sheet
 
-        // Function to update cart display
-        function updateCartDisplay() {
-            cartItemsDiv.innerHTML = ''; // Clear current items
-            if (cart.length === 0) {
-                emptyCartMessage.style.display = 'block'; // Show empty cart message
-            } else {
-                emptyCartMessage.style.display = 'none'; // Hide empty cart message
-                cart.forEach((item, index) => {
-                    const itemDiv = document.createElement('div');
-                    // Add a remove button for each item
-                    itemDiv.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm';
-                    itemDiv.innerHTML = `
-                        <div>
-                            <span class="font-medium text-gray-800">${item.cakeName}</span>
-                            <span class="text-sm text-gray-600"> (${item.variant}) x ${item.quantity}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="font-semibold text-pink-600 mr-2">₹${item.price.toFixed(2)}</span>
-                            <button class="remove-item-btn text-red-500 hover:text-red-700 transition duration-200" data-index="${index}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
-                    `;
-                    cartItemsDiv.appendChild(itemDiv);
-                });
-
-                // Add event listeners for remove buttons
-                document.querySelectorAll('.remove-item-btn').forEach(button => {
-                    button.addEventListener('click', (event) => {
-                        const indexToRemove = parseInt(event.currentTarget.dataset.index);
-                        removeItemFromCart(indexToRemove);
-                    });
-                });
-            }
-            cartTotalSpan.textContent = `₹${total.toFixed(2)}`;
-        }
-
-        // Function to add item to cart
-        addToCartBtn.addEventListener('click', () => {
-            const cakeName = "Chocolate Truffle Cake"; // Hardcoded for this example
-            const selectedVariant = variantSelect.value;
-            // Ensure price is parsed correctly from data-price attribute
-            const pricePerUnit = parseFloat(variantSelect.options[variantSelect.selectedIndex].dataset.price);
-            const quantity = parseInt(quantityInput.value);
-
-            if (quantity <= 0 || isNaN(quantity)) {
-                showMessageModal('Invalid Quantity', 'कृपया एक वैध मात्रा दर्ज करें जो शून्य से अधिक हो।'); // Invalid Quantity message in Hindi
-                return;
-            }
-
-            const itemTotalPrice = pricePerUnit * quantity; // Total price for this item's quantity
-
-            const existingItemIndex = cart.findIndex(item => item.cakeName === cakeName && item.variant === selectedVariant);
-
-            if (existingItemIndex > -1) {
-                // If item with same cake name and variant exists, update quantity and total price for that item
-                cart[existingItemIndex].quantity += quantity;
-                cart[existingItemIndex].price += itemTotalPrice; // Accumulate total price for the item
-            } else {
-                // Add new item to cart
-                cart.push({
-                    cakeName: cakeName,
-                    variant: selectedVariant,
-                    quantity: quantity,
-                    price: itemTotalPrice // Total price for this specific item in the cart
-                });
-            }
-
-            total += itemTotalPrice; // Add the item's total price to the overall cart total
-            updateCartDisplay();
-            showMessageModal('आइटम जोड़ा गया', `${quantity} ${cakeName} (${selectedVariant}) कार्ट में जोड़ा गया। कुल: ₹${total.toFixed(2)}`); // Item Added message in Hindi
-            quantityInput.value = 1; // Reset quantity input after adding to cart
-        });
-
-        // Function to remove item from cart
-        function removeItemFromCart(index) {
-            if (index >= 0 && index < cart.length) {
-                const removedItem = cart.splice(index, 1)[0]; // Remove item and get the removed item
-                total -= removedItem.price; // Subtract the removed item's total price from the overall total
-                updateCartDisplay();
-                showMessageModal('आइटम हटाया गया', `${removedItem.cakeName} (${removedItem.variant}) कार्ट से हटाया गया।`); // Item Removed message in Hindi
-            }
-        }
-
-        // Function to reset cart
-        resetCartBtn.addEventListener('click', () => {
-            cart = [];
-            total = 0;
-            updateCartDisplay();
-            showMessageModal('कार्ट रीसेट किया गया', 'आपका कार्ट साफ़ कर दिया गया है।'); // Cart Reset message in Hindi
-        });
-
-        // Toggle Custom Address field based on Delivery Type
-        deliveryTypeSelect.addEventListener('change', () => {
-            if (deliveryTypeSelect.value === 'delivery') {
-                customAddressGroup.style.display = 'block';
-                customAddressTextarea.setAttribute('required', 'true');
-            } else {
-                customAddressGroup.style.display = 'none';
-                customAddressTextarea.removeAttribute('required');
-                customAddressTextarea.value = ''; // Clear address when not needed
-            }
-        });
-
-        // Function to generate a simple Order ID
-        function generateOrderId() {
-            const timestamp = Date.now().toString(36);
-            const random = Math.random().toString(36).substring(2, 7);
-            return `ORDER-${timestamp}-${random}`.toUpperCase();
-        }
+        // --- Google Apps Script Web App URLs ---
+        // PRODUCTS_WEB_APP_URL: आपके प्रोडक्ट डेटा API का URL
+        const PRODUCTS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzYvl3ymQU718LULXQ41GGwhlLxmNZwOTzo6j5YedvKMU0SvFd7G-IvH5HjK5brFgaVMA/exec';
+        // ORDERS_WEB_APP_URL: आपके ऑर्डर डेटा API का URL
+        const ORDERS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw1-2kpzcXhWi9jzgXNz2xz7Pstf33rJ1ExIzm7Fh2zwUebejqUqLngMaC6cxRt2lsd0Q/exec';
 
         // Function to display the modal
         function showMessageModal(title, message) {
@@ -332,16 +219,214 @@
             }
         }
 
-        // Handle order form submission
+        // --- Cart Functions ---
+        function updateCartDisplay() {
+            cartItemsDiv.innerHTML = ''; // Clear current items
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block'; // Show empty cart message
+            } else {
+                emptyCartMessage.style.display = 'none'; // Hide empty cart message
+                cart.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm';
+                    itemDiv.innerHTML = `
+                        <div>
+                            <span class="font-medium text-gray-800">${item.cakeName}</span>
+                            <span class="text-sm text-gray-600"> (${item.variant}) x ${item.quantity}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="font-semibold text-pink-600 mr-2">₹${item.price.toFixed(2)}</span>
+                            <button class="remove-item-btn text-red-500 hover:text-red-700 transition duration-200" data-index="${index}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsDiv.appendChild(itemDiv);
+                });
+
+                document.querySelectorAll('.remove-item-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const indexToRemove = parseInt(event.currentTarget.dataset.index);
+                        removeItemFromCart(indexToRemove);
+                    });
+                });
+            }
+            cartTotalSpan.textContent = `₹${total.toFixed(2)}`;
+        }
+
+        function addToCart(productId) {
+            const product = availableProducts.find(p => p.ID === productId);
+            if (!product) {
+                showMessageModal('त्रुटि', 'उत्पाद नहीं मिला।'); // Product not found in Hindi
+                return;
+            }
+
+            const variantSelect = document.getElementById(`variant-select-${productId}`);
+            const quantityInput = document.getElementById(`quantity-input-${productId}`);
+
+            const selectedVariantData = product.VariantsData.find(v => v.size === variantSelect.value);
+            const quantity = parseInt(quantityInput.value);
+
+            if (!selectedVariantData || quantity <= 0 || isNaN(quantity)) {
+                showMessageModal('अमान्य मात्रा', 'कृपया एक वैध मात्रा और वेरिएंट चुनें।'); // Invalid quantity/variant in Hindi
+                return;
+            }
+
+            const itemTotalPrice = selectedVariantData.price * quantity;
+
+            const existingItemIndex = cart.findIndex(item => item.cakeName === product.Name && item.variant === selectedVariantData.size);
+
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += quantity;
+                cart[existingItemIndex].price += itemTotalPrice;
+            } else {
+                cart.push({
+                    cakeName: product.Name,
+                    variant: selectedVariantData.size,
+                    quantity: quantity,
+                    price: itemTotalPrice,
+                    id: product.ID // Store product ID for easy lookup if needed
+                });
+            }
+
+            total += itemTotalPrice;
+            updateCartDisplay();
+            showMessageModal('आइटम जोड़ा गया', `${quantity} ${product.Name} (${selectedVariantData.size}) कार्ट में जोड़ा गया। कुल: ₹${total.toFixed(2)}`); // Item Added in Hindi
+            quantityInput.value = 1; // Reset quantity
+        }
+
+        function removeItemFromCart(index) {
+            if (index >= 0 && index < cart.length) {
+                const removedItem = cart.splice(index, 1)[0];
+                total -= removedItem.price;
+                updateCartDisplay();
+                showMessageModal('आइटम हटाया गया', `${removedItem.cakeName} (${removedItem.variant}) कार्ट से हटाया गया।`); // Item Removed in Hindi
+            }
+        }
+
+        resetCartBtn.addEventListener('click', () => {
+            cart = [];
+            total = 0;
+            updateCartDisplay();
+            showMessageModal('कार्ट रीसेट किया गया', 'आपका कार्ट साफ़ कर दिया गया है।'); // Cart Reset in Hindi
+        });
+
+        // Toggle Custom Address field based on Delivery Type
+        deliveryTypeSelect.addEventListener('change', () => {
+            if (deliveryTypeSelect.value === 'delivery') {
+                customAddressGroup.style.display = 'block';
+                customAddressTextarea.setAttribute('required', 'true');
+            } else {
+                customAddressGroup.style.display = 'none';
+                customAddressTextarea.removeAttribute('required');
+                customAddressTextarea.value = ''; // Clear address when not needed
+            }
+        });
+
+        function generateOrderId() {
+            const timestamp = Date.now().toString(36);
+            const random = Math.random().toString(36).substring(2, 7);
+            return `ORDER-${timestamp}-${random}`.toUpperCase();
+        }
+
+        // --- Product Rendering Functions ---
+        function renderProducts(products) {
+            productsContainer.innerHTML = ''; // Clear loading messages
+            loadingProducts.classList.add('hidden');
+            noProductsMessage.classList.add('hidden');
+            productsErrorMessage.classList.add('hidden');
+
+            if (products.length === 0) {
+                noProductsMessage.classList.remove('hidden');
+                return;
+            }
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-white p-4 md:p-6 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.01] flex flex-col';
+
+                // Product Images
+                const imagesHtml = product.images && product.images.length > 0
+                    ? `<div class="grid grid-cols-3 gap-2 mb-4 w-full">
+                        ${product.images.map(imgSrc => `<img src="${imgSrc}" alt="${product.Name}" class="w-full h-20 md:h-24 object-cover rounded-lg shadow-sm border-2 border-pink-200">`).join('')}
+                       </div>`
+                    : `<div class="flex justify-center mb-4 w-full">
+                        <img src="https://placehold.co/150x150/FFC0CB/4B5563?text=No+Image" alt="No image available" class="w-full h-24 object-cover rounded-lg shadow-sm border-2 border-pink-200">
+                       </div>`;
+
+                // Variants Dropdown
+                const variantsOptionsHtml = product.VariantsData && product.VariantsData.length > 0
+                    ? product.VariantsData.map(variant => `<option value="${variant.size}" data-price="${variant.price}">${variant.size} - ₹${variant.price}</option>`).join('')
+                    : `<option value="" disabled>वेरिएंट उपलब्ध नहीं हैं</option>`; // No variants available in Hindi
+
+                productCard.innerHTML = `
+                    ${imagesHtml}
+                    <div class="flex-grow">
+                        <h2 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">${product.Name}</h2>
+                        <p class="text-gray-600 mb-4 text-sm md:text-base">${product.Description}</p>
+
+                        <div class="mb-4">
+                            <label for="variant-select-${product.ID}" class="block text-gray-700 font-medium mb-2">वेरिएंट चुनें</label>
+                            <select id="variant-select-${product.ID}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
+                                ${variantsOptionsHtml}
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="quantity-input-${product.ID}" class="block text-gray-700 font-medium mb-2">मात्रा</label>
+                            <input type="number" id="quantity-input-${product.ID}" value="1" min="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
+                        </div>
+                    </div>
+                    <button class="add-to-cart-btn w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out mt-auto" data-product-id="${product.ID}">
+                        कार्ट में जोड़ें
+                    </button>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+
+            // Attach event listeners to the dynamically created 'Add to Cart' buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const productId = event.currentTarget.dataset.productId;
+                    addToCart(productId);
+                });
+            });
+        }
+
+        async function fetchProducts() {
+            loadingProducts.classList.remove('hidden');
+            noProductsMessage.classList.add('hidden');
+            productsErrorMessage.classList.add('hidden');
+            try {
+                const response = await fetch(PRODUCTS_WEB_APP_URL);
+                const data = await response.json();
+
+                if (data.status === 'success' && data.products) {
+                    availableProducts = data.products;
+                    renderProducts(availableProducts);
+                } else {
+                    console.error('प्रोडक्ट्स फ़ेच करने में त्रुटि:', data.message); // Error fetching products in Hindi
+                    productsErrorMessage.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('प्रोडक्ट्स फ़ेच करने में नेटवर्क या पार्सिंग त्रुटि:', error); // Network or parsing error in Hindi
+                productsErrorMessage.classList.remove('hidden');
+            } finally {
+                loadingProducts.classList.add('hidden');
+            }
+        }
+
+        // --- Order Submission ---
         orderForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             if (cart.length === 0) {
-                showMessageModal('खाली कार्ट', 'कृपया ऑर्डर देने से पहले अपने कार्ट में आइटम जोड़ें।'); // Empty Cart message in Hindi
+                showMessageModal('खाली कार्ट', 'कृपया ऑर्डर देने से पहले अपने कार्ट में आइटम जोड़ें।');
                 return;
             }
 
-            // Collect form data
             const customerName = customerNameInput.value.trim();
             const phoneNumber = phoneNumberInput.value.trim();
             const deliveryType = deliveryTypeSelect.value;
@@ -349,11 +434,11 @@
             const messageOnCake = messageOnCakeTextarea.value.trim() || 'No message';
 
             if (!customerName || !phoneNumber) {
-                showMessageModal('जानकारी अधूरी', 'कृपया अपना नाम और फ़ोन नंबर भरें।'); // Missing info message in Hindi
+                showMessageModal('जानकारी अधूरी', 'कृपया अपना नाम और फ़ोन नंबर भरें।');
                 return;
             }
             if (deliveryType === 'delivery' && !customAddress) {
-                 showMessageModal('जानकारी अधूरी', 'डिलीवरी के लिए कृपया एक पता दर्ज करें।'); // Missing address message in Hindi
+                 showMessageModal('जानकारी अधूरी', 'डिलीवरी के लिए कृपया एक पता दर्ज करें।');
                 return;
             }
 
@@ -379,26 +464,23 @@
             };
 
             // Log the orderData to console for debugging before sending
-            console.log("Sending order data:", orderData);
-
-            // Your provided Google Apps Script Web App URL
-            const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw1-2kpzcXhWi9jzgXNz2xz7Pstf33rJ1ExIzm7Fh2zwUebejqUqLngMaC6cxRt2lsd0Q/exec'; 
+            console.log("भेजा जा रहा ऑर्डर डेटा:", orderData); // Sending order data in Hindi
 
             try {
-                // Using 'no-cors' for Google Apps Script to avoid CORS issues.
-                // Note: With 'no-cors', you won't be able to read the response from the script,
-                // but the request will still be sent.
-                const response = await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+                const response = await fetch(ORDERS_WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    mode: 'no-cors', // Use 'no-cors' for Google Apps Script to avoid CORS issues
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(orderData)
                 });
 
-                // Simulate success as we can't read response in no-cors mode
-                showMessageModal('ऑर्डर सफलतापूर्वक दिया गया!', `आपका ऑर्डर आईडी है: ${orderId}। हम आपसे जल्द ही संपर्क करेंगे।`); // Success message in Hindi
+                // Note: With 'no-cors', you won't be able to read the response.
+                // The request will still be sent to the server.
+                // You'll rely on the server-side logging or sheet updates for confirmation.
+                
+                showMessageModal('ऑर्डर सफलतापूर्वक दिया गया!', `आपका ऑर्डर आईडी है: ${orderId}। हम आपसे जल्द ही संपर्क करेंगे।`); // Order Placed in Hindi
                 
                 // Reset cart and form after successful order
                 cart = [];
@@ -407,18 +489,21 @@
                 orderForm.reset();
                 customAddressGroup.style.display = 'none'; // Hide address field after reset
                 customAddressTextarea.value = ''; // Clear address field
-                quantityInput.value = 1; // Reset quantity to default
+                // Quantity inputs for dynamically loaded products will be reset when product cards are re-rendered or next time they are used.
 
             } catch (error) {
-                console.error('ऑर्डर देते समय त्रुटि:', error); // Error message in Hindi
-                showMessageModal('ऑर्डर विफल', 'आपके ऑर्डर को संसाधित करते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें या अपने इंटरनेट कनेक्शन की जाँच करें।'); // Failed message in Hindi
+                console.error('ऑर्डर देते समय त्रुटि:', error); // Error placing order in Hindi
+                showMessageModal('ऑर्डर विफल', 'आपके ऑर्डर को संसाधित करते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें या अपने इंटरनेट कनेक्शन की जाँच करें।'); // Order Failed in Hindi
             } finally {
                 showLoading(false);
             }
         });
 
-        // Initial display update when the page loads
-        updateCartDisplay();
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchProducts(); // Fetch products when the page loads
+            updateCartDisplay(); // Initialize cart display
+        });
     </script>
 </body>
 </html>
