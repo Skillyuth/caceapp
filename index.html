@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,7 +73,7 @@
     <!-- Header -->
     <header class="bg-pink-500 text-white p-4 shadow-md flex items-center justify-center rounded-b-lg">
         <span class="text-3xl mr-3">🎂</span>
-        <h1 class="text-2xl md:text-3xl font-bold">डायनामिक केक शॉप</h1> <!-- Dynamic Cake Shop in Hindi -->
+        <h1 class="text-2xl md:text-3xl font-bold">CACKEMINTUS.COM</h1> <!-- Dynamic Cake Shop in Hindi -->
     </header>
 
     <main class="flex-grow container mx-auto p-4 md:p-6 lg:p-8">
@@ -80,65 +82,65 @@
             <!-- Products will be injected here by JavaScript -->
             <div id="loading-products" class="col-span-full flex flex-col items-center justify-center py-12">
                 <div class="loader mb-4"></div>
-                <p class="text-gray-700 font-medium">स्वादिष्ट केक लोड हो रहे हैं...</p> <!-- Loading cakes in Hindi -->
+                <p class="text-gray-700 font-medium">Loading cakes...</p> <!-- Loading cakes in Hindi -->
             </div>
             <div id="no-products-message" class="col-span-full hidden text-center py-12 text-gray-500">
-                <p>कोई प्रोडक्ट नहीं मिला। कृपया अपनी Google शीट में प्रोडक्ट जोड़ें।</p> <!-- No products found in Hindi -->
+                <p>No Data Found Product Database Table Plase Add Minmum One Product।</p> <!-- No products found in Hindi -->
                 <p class="text-sm mt-2">सुनिश्चित करें कि आपकी 'Products' शीट सही ढंग से कॉन्फ़िगर और डिप्लॉय की गई है।</p> <!-- Ensure Products sheet in Hindi -->
             </div>
              <div id="products-error-message" class="col-span-full hidden text-center py-12 text-red-500">
-                <p>प्रोडक्ट लोड करने में त्रुटि। कृपया बाद में पुनः प्रयास करें या विवरण के लिए कंसोल जांचें।</p> <!-- Error loading products in Hindi -->
+                <p>Error Fesh To Loding Product Plase Try Agin।</p> <!-- Error loading products in Hindi -->
             </div>
         </section>
 
         <!-- Cart Section -->
         <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
             <h2 class="text-xl md:text-2xl font-bold mb-4 flex items-center text-gray-800">
-                🛒 आपका कार्ट
+                🛒 Your Cart
             </h2>
             <div id="cart-items" class="mb-4 space-y-2 max-h-60 overflow-y-auto pr-2">
                 <!-- Cart items will be dynamically added here -->
-                <p class="text-gray-500 text-center py-4" id="empty-cart-message">आपका कार्ट खाली है।</p>
+                <p class="text-gray-500 text-center py-4" id="empty-cart-message">Your Carte  Empty।।</p>
             </div>
             <div class="flex justify-between items-center text-lg md:text-xl font-semibold border-t border-gray-200 pt-4 mt-4">
-                <span class="text-gray-700">कुल:</span>
+                <span class="text-gray-700">Total:</span>
                 <span id="cart-total" class="text-pink-600">₹0</span>
             </div>
             <button id="reset-cart-btn" class="w-full mt-4 bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
-                कार्ट रीसेट करें
+                Cart Resst 
             </button>
         </section>
 
         <!-- Customer Details and Order Section -->
         <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
-            <h2 class="text-xl md:text-2xl font-bold mb-4 text-gray-800">ग्राहक जानकारी</h2>
+            <h2 class="text-xl md:text-2xl font-bold mb-4 text-gray-800">Customer Informaction</h2>
             <form id="order-form">
                 <div class="mb-4">
-                    <label for="customer-name" class="block text-gray-700 font-medium mb-2">आपका नाम</label>
-                    <input type="text" id="customer-name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="अपना नाम दर्ज करें" required>
+                    <label for="customer-name" class="block text-gray-700 font-medium mb-2">customerName</label>
+                    <input type="text" id="customer-name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter Name" required>
                 </div>
                 <div class="mb-4">
-                    <label for="phone-number" class="block text-gray-700 font-medium mb-2">फ़ोन नंबर</label>
-                    <input type="tel" id="phone-number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="अपना 10 अंकों का फ़ोन नंबर दर्ज करें" pattern="[0-9]{10,15}" required>
+                    <label for="phone-number" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                    <input type="tel" id="phone-number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter 10 Digit Phone Number" pattern="[0-9]{10,15}" required>
                 </div>
                 <div class="mb-4">
-                    <label for="delivery-type" class="block text-gray-700 font-medium mb-2">डिलीवरी प्रकार</label>
+                    <label for="delivery-type" class="block text-gray-700 font-medium mb-2">Delivery Type Select</label>
                     <select id="delivery-type" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
-                        <option value="pickup">पिकअप</option>
-                        <option value="delivery">डिलीवरी</option>
+                        <option value="pickup">Abc-Restaurant IndiraPuram</option>
+                        <option value="delivery">Costem Delivery</option>
                     </select>
                 </div>
                 <div class="mb-4" id="custom-address-group" style="display: none;">
-                    <label for="custom-address" class="block text-gray-700 font-medium mb-2">कस्टम पता</label>
-                    <textarea id="custom-address" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="पूरा डिलीवरी पता दर्ज करें"></textarea>
+                    <label for="custom-address" class="block text-gray-700 font-medium mb-2">Custome Address</label>
+                    <textarea id="custom-address" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Delivery Address"></textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="message-on-cake" class="block text-gray-700 font-medium mb-2">केक पर संदेश (वैकल्पिक)</label>
-                    <textarea id="message-on-cake" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="उदाहरण: Happy Birthday!"></textarea>
+                    <label for="message-on-cake" class="block text-gray-700 font-medium mb-2">Massage On Cake(option)</label>
+                    <textarea id="message-on-cake" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Example: Happy Birthday!"></textarea>
                 </div>
 
                 <button type="submit" id="place-order-btn" class="w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
-                    ऑर्डर दें
+                    Order Placed
                 </button>
             </form>
         </section>
@@ -150,7 +152,7 @@
             <h3 id="modal-title" class="text-xl font-bold mb-4 text-gray-800"></h3>
             <p id="modal-message" class="text-gray-700 mb-6"></p>
             <button id="modal-close-btn" class="bg-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
-                ओके
+                Ok
             </button>
         </div>
     </div>
@@ -159,7 +161,7 @@
     <div id="loading-indicator" class="modal-overlay hidden">
         <div class="modal-content flex flex-col items-center">
             <div class="loader mb-4"></div>
-            <p class="text-gray-700 font-medium">लोड हो रहा है...</p>
+            <p class="text-gray-700 font-medium">Loading...</p>
         </div>
     </div>
 
@@ -194,9 +196,9 @@
 
         // --- Google Apps Script Web App URLs ---
         // PRODUCTS_WEB_APP_URL: आपके प्रोडक्ट डेटा API का URL
-        const PRODUCTS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzYvl3ymQU718LULXQ41GGwhlLxmNZwOTzo6j5YedvKMU0SvFd7G-IvH5HjK5brFgaVMA/exec';
+        const PRODUCTS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyEFN5hN5gmN9Esqhy_hrl_6vfGtzVbrlOCYD-4kV4pkbe3Ua0tBHrxBC78UymsNVejFw/exec';
         // ORDERS_WEB_APP_URL: आपके ऑर्डर डेटा API का URL
-        const ORDERS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw1-2kpzcXhWi9jzgXNz2xz7Pstf33rJ1ExIzm7Fh2zwUebejqUqLngMaC6cxRt2lsd0Q/exec';
+        const ORDERS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwvYRtHoEkeVfaKER6xnuuUQbOyWacE0nXxJe0aNLFGGMVi15z3LHQj7KCW0GOxdu0/exec';
 
         // Function to display the modal
         function showMessageModal(title, message) {
@@ -259,7 +261,7 @@
         function addToCart(productId) {
             const product = availableProducts.find(p => p.ID === productId);
             if (!product) {
-                showMessageModal('त्रुटि', 'उत्पाद नहीं मिला।'); // Product not found in Hindi
+                showMessageModal('Wrong', 'Product not found'); // Product not found in Hindi
                 return;
             }
 
@@ -270,7 +272,7 @@
             const quantity = parseInt(quantityInput.value);
 
             if (!selectedVariantData || quantity <= 0 || isNaN(quantity)) {
-                showMessageModal('अमान्य मात्रा', 'कृपया एक वैध मात्रा और वेरिएंट चुनें।'); // Invalid quantity/variant in Hindi
+                showMessageModal('Invalid quantity', 'Invalid quantity/variant।'); // Invalid quantity/variant in Hindi
                 return;
             }
 
@@ -293,7 +295,7 @@
 
             total += itemTotalPrice;
             updateCartDisplay();
-            showMessageModal('आइटम जोड़ा गया', `${quantity} ${product.Name} (${selectedVariantData.size}) कार्ट में जोड़ा गया। कुल: ₹${total.toFixed(2)}`); // Item Added in Hindi
+            showMessageModal('Add Item', `${quantity} ${product.Name} (${selectedVariantData.size}) Add cart Item । Total: ₹${total.toFixed(2)}`); // Item Added in Hindi
             quantityInput.value = 1; // Reset quantity
         }
 
@@ -302,7 +304,7 @@
                 const removedItem = cart.splice(index, 1)[0];
                 total -= removedItem.price;
                 updateCartDisplay();
-                showMessageModal('आइटम हटाया गया', `${removedItem.cakeName} (${removedItem.variant}) कार्ट से हटाया गया।`); // Item Removed in Hindi
+                showMessageModal('Item Clear', `${removedItem.cakeName} (${removedItem.variant}) Item Removed In Cart।`); // Item Removed in Hindi
             }
         }
 
@@ -310,7 +312,7 @@
             cart = [];
             total = 0;
             updateCartDisplay();
-            showMessageModal('कार्ट रीसेट किया गया', 'आपका कार्ट साफ़ कर दिया गया है।'); // Cart Reset in Hindi
+            showMessageModal('Reset Your Cart', 'Empty Your cart।'); // Cart Reset in Hindi
         });
 
         // Toggle Custom Address field based on Delivery Type
@@ -359,7 +361,7 @@
                 // Variants Dropdown
                 const variantsOptionsHtml = product.VariantsData && product.VariantsData.length > 0
                     ? product.VariantsData.map(variant => `<option value="${variant.size}" data-price="${variant.price}">${variant.size} - ₹${variant.price}</option>`).join('')
-                    : `<option value="" disabled>वेरिएंट उपलब्ध नहीं हैं</option>`; // No variants available in Hindi
+                    : `<option value="" disabled>No variants available</option>`; // No variants available in Hindi
 
                 productCard.innerHTML = `
                     ${imagesHtml}
@@ -368,19 +370,19 @@
                         <p class="text-gray-600 mb-4 text-sm md:text-base">${product.Description}</p>
 
                         <div class="mb-4">
-                            <label for="variant-select-${product.ID}" class="block text-gray-700 font-medium mb-2">वेरिएंट चुनें</label>
+                            <label for="variant-select-${product.ID}" class="block text-gray-700 font-medium mb-2">Select Variant</label>
                             <select id="variant-select-${product.ID}" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
                                 ${variantsOptionsHtml}
                             </select>
                         </div>
 
                         <div class="mb-4">
-                            <label for="quantity-input-${product.ID}" class="block text-gray-700 font-medium mb-2">मात्रा</label>
+                            <label for="quantity-input-${product.ID}" class="block text-gray-700 font-medium mb-2">quantity</label>
                             <input type="number" id="quantity-input-${product.ID}" value="1" min="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
                         </div>
                     </div>
                     <button class="add-to-cart-btn w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out mt-auto" data-product-id="${product.ID}">
-                        कार्ट में जोड़ें
+                        Add To Cart
                     </button>
                 `;
                 productsContainer.appendChild(productCard);
