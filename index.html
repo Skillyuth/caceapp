@@ -1,213 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mobile Cake Shop</title>
-  <style>
-    body { font-family: sans-serif; margin: 0; background: #fff7f7; }
-    header { background: #e91e63; color: #fff; padding: 1rem; text-align: center; font-size: 1.6rem; }
-    .container { padding: 1rem; }
-    .cake-card { background: #fff; border-radius: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); margin-bottom: 1.5rem; padding: 1rem; }
-    .cake-images { display: flex; overflow-x: auto; margin-bottom: 0.8rem; }
-    .cake-images img { height: 100px; margin-right: 0.6rem; border-radius: 8px; }
-    select, input, textarea, button { width: 100%; padding: 0.6rem; margin: 0.4rem 0; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
-    button { background: #e91e63; color: white; border: none; font-weight: bold; cursor: pointer; }
-    .cart-summary { background: white; padding: 1rem; border-radius: 10px; margin: 1.5rem 0; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .total { font-weight: bold; font-size: 1.2rem; color: #333; text-align: right; }
-    .reset-btn { background: #555; margin-top: 1rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Cake Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            color: #333; /* Default text color */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0a0a0;
+        }
+        /* Style for the overlay and modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+        /* Loader for loading indicator */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #EC4899; /* Pink */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
-  <header>🎂 Mobile Cake Shop</header>
-  <div class="container">
-    <script>
-     const cakes = [
-  {
-    name: "Red Velvet Cake",
-    desc: "Classic red velvet with soft cream cheese.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  },
-  {
-    name: "Black Forest Cake",
-    desc: "Chocolate sponge with cherries and cream.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  },
-  {
-    name: "Butterscotch Cake",
-    desc: "Soft sponge with caramel and butterscotch chips.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  },
-  {
-    name: "Pineapple Cake",
-    desc: "Juicy pineapple cream layered delight.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  },
-  {
-    name: "Mango Cake",
-    desc: "Seasonal mango freshness in every bite.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  },
-  {
-    name: "Strawberry Cake",
-    desc: "Sweet and creamy strawberry indulgence.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  },
-  {
-    name: "Coffee Cake",
-    desc: "For the love of coffee and cocoa.",
-    imgs: [
-      "https://i.ibb.co/7t883d0Z/Allindiacake-anniversary.webp",
-      "https://i.ibb.co/60vhr6cL/Cake-f35f4e52-1b06-4bd4-bf7f-891084200e21.webp",
-      "https://i.ibb.co/7t1mt8wY/images.jpg"
-    ]
-  }
-];
+<body class="flex flex-col min-h-screen">
 
-    </script>
+    <header class="bg-pink-500 text-white p-4 shadow-md flex items-center justify-center rounded-b-lg">
+        <span class="text-3xl mr-3">🎂</span> <h1 class="text-2xl md:text-3xl font-bold">Mobile Cake Shop</h1>
+    </header>
 
-    <div id="cake-list"></div>
+    <main class="flex-grow container mx-auto p-4 md:p-6 lg:p-8">
+        <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
+            <div class="flex flex-col md:flex-row items-center md:items-start">
+                <div class="flex justify-center mb-4 md:mb-0 md:mr-6 w-full md:w-1/3 lg:w-1/4">
+                    <div class="grid grid-cols-3 gap-2 w-full">
+                        <img src="https://placehold.co/100x100/FFC0CB/4B5563?text=Rich+Chocolate" alt="Chocolate Truffle Cake" class="w-full h-auto rounded-lg shadow-sm object-cover border-2 border-pink-200">
+                        <img src="https://placehold.co/100x100/FFC0CB/4B5563?text=Creamy+Frosting" alt="Creamy Frosting Cake" class="w-full h-auto rounded-lg shadow-sm object-cover border-2 border-pink-200">
+                        <img src="https://placehold.co/100x100/FFC0CB/4B5563?text=Truffle+Delight" alt="Truffle Delight Cake" class="w-full h-auto rounded-lg shadow-sm object-cover border-2 border-pink-200">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3 lg:w-3/4">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-2 text-gray-800">Chocolate Truffle Cake</h2>
+                    <p class="text-gray-600 mb-4 text-sm md:text-base">Rich chocolate layers with creamy frosting.</p>
 
-    <div class="cart-summary">
-      <h4>🛒 Your Cart</h4>
-      <ul id="cart"></ul>
-      <p class="total">Total: ₹<span id="total">0</span></p>
-      <button type="button" class="reset-btn" onclick="resetCart()">Reset Cart</button>
+                    <div class="mb-4">
+                        <label for="variant-select" class="block text-gray-700 font-medium mb-2">Select Variant</label>
+                        <select id="variant-select" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
+                            <option value="500g" data-price="750">500g - ₹750</option>
+                            <option value="1kg" data-price="1200">1kg - ₹1200</option>
+                            <option value="2kg" data-price="2200">2kg - ₹2200</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="quantity-input" class="block text-gray-700 font-medium mb-2">Quantity</label>
+                        <input type="number" id="quantity-input" value="1" min="1" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
+                    </div>
+
+                    <button id="add-to-cart-btn" class="w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
+            <h2 class="text-xl md:text-2xl font-bold mb-4 flex items-center text-gray-800">
+                🛒 Your Cart
+            </h2>
+            <div id="cart-items" class="mb-4 space-y-2 max-h-60 overflow-y-auto pr-2">
+                <p class="text-gray-500 text-center py-4" id="empty-cart-message">Your cart is empty.</p>
+            </div>
+            <div class="flex justify-between items-center text-lg md:text-xl font-semibold border-t border-gray-200 pt-4 mt-4">
+                <span class="text-gray-700">Total:</span>
+                <span id="cart-total" class="text-pink-600">₹0</span>
+            </div>
+            <button id="reset-cart-btn" class="w-full mt-4 bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
+                Reset Cart
+            </button>
+        </section>
+
+        <section class="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 transform transition-all duration-300 hover:scale-[1.01]">
+            <h2 class="text-xl md:text-2xl font-bold mb-4 text-gray-800">Customer Information</h2>
+            <form id="order-form">
+                <div class="mb-4">
+                    <label for="customer-name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                    <input type="text" id="customer-name" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-4">
+                    <label for="phone-number" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                    <input type="tel" id="phone-number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter your 10-digit phone number" pattern="[0-9]{10,15}" required>
+                </div>
+                <div class="mb-4">
+                    <label for="delivery-type" class="block text-gray-700 font-medium mb-2">Delivery Type</label>
+                    <select id="delivery-type" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out">
+                        <option value="pickup">Pickup</option>
+                        <option value="delivery">Delivery</option>
+                    </select>
+                </div>
+                <div class="mb-4" id="custom-address-group" style="display: none;">
+                    <label for="custom-address" class="block text-gray-700 font-medium mb-2">Custom Address</label>
+                    <textarea id="custom-address" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="Enter full delivery address"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="message-on-cake" class="block text-gray-700 font-medium mb-2">Message on the cake (optional)</label>
+                    <textarea id="message-on-cake" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-200 ease-in-out" placeholder="e.g., Happy Birthday!"></textarea>
+                </div>
+
+                <button type="submit" id="place-order-btn" class="w-full bg-pink-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transform active:scale-95 transition duration-300 ease-in-out">
+                    Place Order
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <div id="message-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-xl font-bold mb-4 text-gray-800"></h3>
+            <p id="modal-message" class="text-gray-700 mb-6"></p>
+            <button id="modal-close-btn" class="bg-pink-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2">
+                OK
+            </button>
+        </div>
     </div>
 
-    <form action="https://formsubmit.co/a995de801cdfc7487326f5756468f8ef" method="POST" onsubmit="generateOrderData()">
-      <input type="hidden" name="Cart Items" id="cart-items-hidden" />
-      <input type="hidden" name="Total Amount" id="total-hidden" />
-      <input type="hidden" name="Order ID" id="order-id" />
-      <input type="hidden" name="Order Date" id="order-date" />
-      <input type="hidden" name="_redirect" value="https://yourdomain.com/thankyou.html" />
+    <div id="loading-indicator" class="modal-overlay hidden">
+        <div class="modal-content flex flex-col items-center">
+            <div class="loader mb-4"></div>
+            <p class="text-gray-700 font-medium">Placing order...</p>
+        </div>
+    </div>
 
-      <input type="text" name="Name" placeholder="Your Name" required />
-      <input type="tel" name="Phone" placeholder="Phone Number" required />
+    <script>
+        // DOM Elements
+        const variantSelect = document.getElementById('variant-select');
+        const quantityInput = document.getElementById('quantity-input');
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        const cartItemsDiv = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartTotalSpan = document.getElementById('cart-total');
+        const resetCartBtn = document.getElementById('reset-cart-btn');
+        const orderForm = document.getElementById('order-form');
+        const customerNameInput = document.getElementById('customer-name');
+        const phoneNumberInput = document.getElementById('phone-number');
+        const deliveryTypeSelect = document.getElementById('delivery-type');
+        const customAddressGroup = document.getElementById('custom-address-group');
+        const customAddressTextarea = document.getElementById('custom-address');
+        const messageOnCakeTextarea = document.getElementById('message-on-cake');
+        const messageModal = document.getElementById('message-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalMessage = document.getElementById('modal-message');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const loadingIndicator = document.getElementById('loading-indicator');
 
-      <select name="Delivery Address" id="address-select" onchange="toggleCustomAddress()" required>
-        <option value="Deepanshu Restaurant">Deepanshu Restaurant</option>
-        <option value="Custom">Custom Address</option>
-      </select>
+        // Cart state
+        let cart = [];
+        let total = 0;
 
-      <textarea name="Custom Address" id="custom-address" placeholder="Write custom address if selected above" style="display:none;"></textarea>
+        // Function to update cart display
+        function updateCartDisplay() {
+            cartItemsDiv.innerHTML = ''; // Clear current items
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block'; // Show empty cart message
+            } else {
+                emptyCartMessage.style.display = 'none'; // Hide empty cart message
+                cart.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    // Add a remove button for each item
+                    itemDiv.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm';
+                    itemDiv.innerHTML = `
+                        <div>
+                            <span class="font-medium text-gray-800">${item.cakeName}</span>
+                            <span class="text-sm text-gray-600"> (${item.variant}) x ${item.quantity}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="font-semibold text-pink-600 mr-2">₹${item.price.toFixed(2)}</span>
+                            <button class="remove-item-btn text-red-500 hover:text-red-700 transition duration-200" data-index="${index}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsDiv.appendChild(itemDiv);
+                });
 
-      <textarea name="Message on Cake" placeholder="Message on the cake (optional)"></textarea>
-      <button type="submit">Place Order</button>
-    </form>
-  </div>
+                // Add event listeners for remove buttons
+                document.querySelectorAll('.remove-item-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const indexToRemove = parseInt(event.currentTarget.dataset.index);
+                        removeItemFromCart(indexToRemove);
+                    });
+                });
+            }
+            cartTotalSpan.textContent = `₹${total.toFixed(2)}`;
+        }
 
-  <script>
-    let cart = [];
+        // Function to add item to cart
+        addToCartBtn.addEventListener('click', () => {
+            const cakeName = "Chocolate Truffle Cake"; // Hardcoded for this example
+            const selectedVariant = variantSelect.value;
+            // Ensure price is parsed correctly from data-price attribute
+            const pricePerUnit = parseFloat(variantSelect.options[variantSelect.selectedIndex].dataset.price);
+            const quantity = parseInt(quantityInput.value);
 
-    function renderCakes() {
-      const list = document.getElementById('cake-list');
-      list.innerHTML = '';
-      cakes.forEach((cake, i) => {
-        const card = document.createElement('div');
-        card.className = 'cake-card';
-        let imagesHTML = '<div class="cake-images">';
-        cake.imgs.forEach(img => {
-          imagesHTML += `<img src="${img}" alt="Cake Image" />`;
+            if (quantity <= 0 || isNaN(quantity)) {
+                showMessageModal('Invalid Quantity', 'कृपया एक वैध मात्रा दर्ज करें जो शून्य से अधिक हो।'); // Invalid Quantity message in Hindi
+                return;
+            }
+
+            const itemTotalPrice = pricePerUnit * quantity; // Total price for this item's quantity
+
+            const existingItemIndex = cart.findIndex(item => item.cakeName === cakeName && item.variant === selectedVariant);
+
+            if (existingItemIndex > -1) {
+                // If item with same cake name and variant exists, update quantity and total price for that item
+                cart[existingItemIndex].quantity += quantity;
+                cart[existingItemIndex].price += itemTotalPrice; // Accumulate total price for the item
+            } else {
+                // Add new item to cart
+                cart.push({
+                    cakeName: cakeName,
+                    variant: selectedVariant,
+                    quantity: quantity,
+                    price: itemTotalPrice // Total price for this specific item in the cart
+                });
+            }
+
+            total += itemTotalPrice; // Add the item's total price to the overall cart total
+            updateCartDisplay();
+            showMessageModal('आइटम जोड़ा गया', `${quantity} ${cakeName} (${selectedVariant}) कार्ट में जोड़ा गया। कुल: ₹${total.toFixed(2)}`); // Item Added message in Hindi
+            quantityInput.value = 1; // Reset quantity input after adding to cart
         });
-        imagesHTML += '</div>';
-        card.innerHTML = `
-          ${imagesHTML}
-          <h3>${cake.name}</h3>
-          <p>${cake.desc}</p>
-          <select onchange="updatePrice(this.value, 'variant-${i}')" id="variant-${i}">
-            <option value="">Select Variant</option>
-            <option value="1lb-399">1 Pound - ₹399</option>
-            <option value="2lb-699">2 Pound - ₹699</option>
-            <option value="3lb-999">3 Pound - ₹999</option>
-            <option value="4lb-1299">4 Pound - ₹1299</option>
-          </select>
-          <button onclick="addToCart('${cake.name}', 'variant-${i}')">Add to Cart</button>
-        `;
-        list.appendChild(card);
-      });
-    }
 
-    function updatePrice(value, id) {
-      const price = value.split('-')[1];
-      document.getElementById(id).dataset.price = price;
-    }
+        // Function to remove item from cart
+        function removeItemFromCart(index) {
+            if (index >= 0 && index < cart.length) {
+                const removedItem = cart.splice(index, 1)[0]; // Remove item and get the removed item
+                total -= removedItem.price; // Subtract the removed item's total price from the overall total
+                updateCartDisplay();
+                showMessageModal('आइटम हटाया गया', `${removedItem.cakeName} (${removedItem.variant}) कार्ट से हटाया गया।`); // Item Removed message in Hindi
+            }
+        }
 
-    function addToCart(cake, selectId) {
-      const select = document.getElementById(selectId);
-      const selected = select.options[select.selectedIndex].text;
-      const value = select.value;
-      if (!value) return alert('Please select a variant.');
-      const price = parseInt(value.split('-')[1]);
-      cart.push({ item: cake + ' - ' + selected, price });
-      renderCart();
-    }
+        // Function to reset cart
+        resetCartBtn.addEventListener('click', () => {
+            cart = [];
+            total = 0;
+            updateCartDisplay();
+            showMessageModal('कार्ट रीसेट किया गया', 'आपका कार्ट साफ़ कर दिया गया है।'); // Cart Reset message in Hindi
+        });
 
-    function renderCart() {
-      const cartEl = document.getElementById('cart');
-      const totalEl = document.getElementById('total');
-      const hiddenItems = document.getElementById('cart-items-hidden');
-      const hiddenTotal = document.getElementById('total-hidden');
-      cartEl.innerHTML = '';
-      let total = 0;
-      cart.forEach(c => {
-        const li = document.createElement('li');
-        li.textContent = `${c.item} - ₹${c.price}`;
-        cartEl.appendChild(li);
-        total += c.price;
-      });
-      totalEl.textContent = total;
-      hiddenTotal.value = total;
-      hiddenItems.value = cart.map(c => c.item + ' - ₹' + c.price).join(', ');
-    }
+        // Toggle Custom Address field based on Delivery Type
+        deliveryTypeSelect.addEventListener('change', () => {
+            if (deliveryTypeSelect.value === 'delivery') {
+                customAddressGroup.style.display = 'block';
+                customAddressTextarea.setAttribute('required', 'true');
+            } else {
+                customAddressGroup.style.display = 'none';
+                customAddressTextarea.removeAttribute('required');
+                customAddressTextarea.value = ''; // Clear address when not needed
+            }
+        });
 
-    function resetCart() {
-      cart = [];
-      renderCart();
-    }
+        // Function to generate a simple Order ID
+        function generateOrderId() {
+            const timestamp = Date.now().toString(36);
+            const random = Math.random().toString(36).substring(2, 7);
+            return `ORDER-${timestamp}-${random}`.toUpperCase();
+        }
 
-    function generateOrderData() {
-      const orderId = Math.floor(1000000000 + Math.random() * 9000000000);
-      const now = new Date();
-      const dateTime = now.toLocaleString();
-      document.getElementById('order-id').value = orderId;
-      document.getElementById('order-date').value = dateTime;
-    }
+        // Function to display the modal
+        function showMessageModal(title, message) {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            messageModal.classList.remove('hidden');
+        }
 
-    function toggleCustomAddress() {
-      const select = document.getElementById('address-select');
-      const textarea = document.getElementById('custom-address');
-      textarea.style.display = select.value === 'Custom' ? 'block' : 'none';
-    }
+        // Function to hide the modal
+        modalCloseBtn.addEventListener('click', () => {
+            messageModal.classList.add('hidden');
+        });
 
-    window.onload = () => {
-      renderCakes();
-      generateOrderData();
-    };
-  </script>
+        // Function to show/hide loading indicator
+        function showLoading(show) {
+            if (show) {
+                loadingIndicator.classList.remove('hidden');
+            } else {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        // Handle order form submission
+        orderForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            if (cart.length === 0) {
+                showMessageModal('खाली कार्ट', 'कृपया ऑर्डर देने से पहले अपने कार्ट में आइटम जोड़ें।'); // Empty Cart message in Hindi
+                return;
+            }
+
+            // Collect form data
+            const customerName = customerNameInput.value.trim();
+            const phoneNumber = phoneNumberInput.value.trim();
+            const deliveryType = deliveryTypeSelect.value;
+            const customAddress = deliveryType === 'delivery' ? customAddressTextarea.value.trim() : 'N/A';
+            const messageOnCake = messageOnCakeTextarea.value.trim() || 'No message';
+
+            if (!customerName || !phoneNumber) {
+                showMessageModal('जानकारी अधूरी', 'कृपया अपना नाम और फ़ोन नंबर भरें।'); // Missing info message in Hindi
+                return;
+            }
+            if (deliveryType === 'delivery' && !customAddress) {
+                 showMessageModal('जानकारी अधूरी', 'डिलीवरी के लिए कृपया एक पता दर्ज करें।'); // Missing address message in Hindi
+                return;
+            }
+
+            showLoading(true);
+
+            const orderId = generateOrderId();
+            const dateTime = new Date().toLocaleString();
+
+            // Prepare data for Google Sheet
+            const orderData = {
+                orderId: orderId,
+                dateTime: dateTime,
+                // Join all cake names and their quantities for a more detailed record
+                cakeName: cart.map(item => `${item.cakeName} (${item.variant} x ${item.quantity})`).join('; '),
+                variant: cart.map(item => item.variant).join(', '), // Still useful to have separate variants if needed
+                quantity: cart.map(item => item.quantity).reduce((sum, q) => sum + q, 0), // Sum all quantities
+                total: total.toFixed(2),
+                deliveryType: deliveryType,
+                customAddress: customAddress,
+                customerName: customerName,
+                phone: phoneNumber,
+                message: messageOnCake
+            };
+
+            // Log the orderData to console for debugging before sending
+            console.log("Sending order data:", orderData);
+
+            // Your provided Google Apps Script Web App URL
+            const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw1-2kpzcXhWi9jzgXNz2xz7Pstf33rJ1ExIzm7Fh2zwUebejqUqLngMaC6cxRt2lsd0Q/exec'; 
+
+            try {
+                // Using 'no-cors' for Google Apps Script to avoid CORS issues.
+                // Note: With 'no-cors', you won't be able to read the response from the script,
+                // but the request will still be sent.
+                const response = await fetch(GOOGLE_SHEET_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                // Simulate success as we can't read response in no-cors mode
+                showMessageModal('ऑर्डर सफलतापूर्वक दिया गया!', `आपका ऑर्डर आईडी है: ${orderId}। हम आपसे जल्द ही संपर्क करेंगे।`); // Success message in Hindi
+                
+                // Reset cart and form after successful order
+                cart = [];
+                total = 0;
+                updateCartDisplay();
+                orderForm.reset();
+                customAddressGroup.style.display = 'none'; // Hide address field after reset
+                customAddressTextarea.value = ''; // Clear address field
+                quantityInput.value = 1; // Reset quantity to default
+
+            } catch (error) {
+                console.error('ऑर्डर देते समय त्रुटि:', error); // Error message in Hindi
+                showMessageModal('ऑर्डर विफल', 'आपके ऑर्डर को संसाधित करते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें या अपने इंटरनेट कनेक्शन की जाँच करें।'); // Failed message in Hindi
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        // Initial display update when the page loads
+        updateCartDisplay();
+    </script>
 </body>
 </html>
